@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Color Analysis</title>
+</head>
+<body>
+    <h1>Image Color Analysis</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <input type="submit" value="Upload">
+    </form>
+    {% if thumbnail_data %}
+    <h2>Uploaded Image:</h2>
+    <img src="data:image/jpeg;base64,{{ thumbnail_data }}" alt="Uploaded Image">
+    {% if color_data %}
+    <h2>Top Colors:</h2>
+    <table>
+        <tr>
+            <th>Color</th>
+            <th>Hex Code</th>
+            <th>Percentage</th>
+        </tr>
+        {% for color, percentage in color_data %}
+        <tr>
+            <td><div style="width: 50px; height: 50px; background-color: {{ color }};"></div></td>
+            <td>{{ color }}</td>
+            <td>{{ percentage|percent }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    {% endif %}
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
